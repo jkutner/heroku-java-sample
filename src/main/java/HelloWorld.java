@@ -27,9 +27,9 @@ public class HelloWorld extends HttpServlet {
           
           resp.getWriter().print(out);
         } catch (URISyntaxException e) {
-          resp.getWriter().print("There was an error");
+          resp.getWriter().print("There was an error: " + e.getMessage());
         } catch (SQLException e) {
-          resp.getWriter().print("There was an error");
+          resp.getWriter().print("There was an error: " + e.getMessage());
         }
       }
 
