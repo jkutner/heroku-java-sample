@@ -11,21 +11,26 @@ public class HelloWorld extends HttpServlet {
       @Override
       protected void doGet(HttpServletRequest req, HttpServletResponse resp)
           throws ServletException, IOException {
-        
-        Connection connection = getConnection();
-        
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("DROP TABLE IF EXISTS ticks");
-        stmt.executeUpdate("CREATE TABLE ticks (tick timestamp)");
-        stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-        ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-        
-        String out = "Hello!\n";
-        while (rs.next()) {
-            out += "Read from DB: " + rs.getTimestamp("tick") + "\n";
+        try {
+          Connection connection = getConnection();
+          
+          Statement stmt = connection.createStatement();
+          stmt.executeUpdate("DROP TABLE IF EXISTS ticks");
+          stmt.executeUpdate("CREATE TABLE ticks (tick timestamp)");
+          stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
+          ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+          
+          String out = "Hello!\n";
+          while (rs.next()) {
+              out += "Read from DB: " + rs.getTimestamp("tick") + "\n";
+          }
+          
+          resp.getWriter().print(out);
+        } catch (URISyntaxException e) {
+          resp.getWriter().print("There was an error");
+        } catch (SQLException e) {
+          resp.getWriter().print("There was an error");
         }
-        
-        resp.getWriter().print(out);
       }
 
       public static void main(String[] args) throws Exception{
