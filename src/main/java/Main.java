@@ -26,11 +26,9 @@ public class Main extends HttpServlet {
       }
       
       resp.getWriter().print(out);
-    } catch (URISyntaxException e) {
+    } catch (Exception e) {
       resp.getWriter().print("There was an error: " + e.getMessage());
-    } catch (SQLException e) {
-      resp.getWriter().print("There was an error: " + e.getMessage());
-    }
+    } 
   }
 
   private Connection getConnection() throws URISyntaxException, SQLException {
