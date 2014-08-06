@@ -33,16 +33,6 @@ public class Main extends HttpServlet {
         }
       }
 
-      public static void main(String[] args) throws Exception{
-        Server server = new Server(Integer.valueOf(System.getenv("PORT")));
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
-        server.setHandler(context);
-        context.addServlet(new ServletHolder(new Main()),"/*");
-        server.start();
-        server.join();
-      }
-
       private Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
@@ -51,5 +41,15 @@ public class Main extends HttpServlet {
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 
         return DriverManager.getConnection(dbUrl, username, password);
+      }
+
+      public static void main(String[] args) throws Exception{
+        Server server = new Server(Integer.valueOf(System.getenv("PORT")));
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        server.setHandler(context);
+        context.addServlet(new ServletHolder(new Main()),"/*");
+        server.start();
+        server.join();
       }
 }
