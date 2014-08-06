@@ -34,7 +34,7 @@ public class Main extends HttpServlet {
         out.close();
       }
     } else {
-      # TODO
+      resp.getWriter().print("Hello from Java!");
     }
   }
 
